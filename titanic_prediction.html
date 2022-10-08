@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<!--
+	Verti by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Titanic Predictions</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload right-sidebar">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
+
+						<!-- Logo -->
+						<div>
+							<h1 class="current"><a class="bg-info rounded" href="titanic_prediction.html">Biraaj Rout</a></h1>
+							<span></span>
+						</div>
+					</header>
+				</div>
+
+			<!-- Main -->
+				<div id="main-wrapper">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-8 col-12-medium">
+								<div id="content">
+
+									<!-- Content -->
+										<article>
+
+											<h2>Titanic - Machine Learning from Disaster</h2>
+
+											<image class="embed-responsive-item" src="images/titanic.jpg" style="width:100%"></image>
+
+											<p>This is a challenge in kaggle to predict the number of passengers that survived in Titanic accident by using the given Titanic dataset.</p>
+
+											<h3>Dataset</h3>
+											<p>Three csv files train.csv, test.csv and gender_submission.csv are provided. There are 891 rows in training set and 418 rows in test set. "gender_submission.csv" contains survival prediction considering only female passengers survived.</p>
+
+											<h3>Data Dictionary</h3>
+											<image class="embed-responsive-item" src="images/data_dictionary_titanic.jpg" style="width:100%"></image>
+
+											<h3>Preliminary Steps</h3>
+											<p>First I went through the tutorial given in <a href="https://www.kaggle.com/code/alexisbcook/titanic-tutorial/notebook">kaggle</a> by Alexis Cook.</p>
+
+											<h3>Data Exploration</h3>
+											<image class="embed-responsive-item" src="images/age_graph_titanic.jpg" style="width:100%"></image>
+											<p>Plotting the age graph I observed that data was distributed which is helpful in taking decison regarding survival of passengers.</p>
+
+											<image class="embed-responsive-item" src="images/embarked_titanic.jpg" style="width:100%"></image>
+											<p>Here Embarked is the port of entry. After plotting the graph we observed that most of the entry was done in Southampton.</p>
+
+											<image class="embed-responsive-item" src="images/Fare_titanic.jpg" style="width:100%"></image>
+											<p>Looking at graph being plotted for Fare feature we can observe most of the ticket did cost between 0-100.</p>
+
+											<h3>Data Cleanup and Normalization</h3>
+											<p>As There are few missing values for Age, Embarked and Fare I filled the missing values using mean and most frequent values. Also some of the values were in float which I converted into integer and object type into string</p>
+											<image class="embed-responsive-item" src="images/data_cleanup_titanic.jpg" style="width:100%"></image>
+
+											<h3>Prediction</h3>
+											<p>Using Random forest Algorithm and Trying out different combination of features I achieved 4 different accuracies.</p>
+											<image class="embed-responsive-item" src="images/prediction_code_titanic.jpg" style="width:100%"></image>
+											
+											<h3>Various submission and accuracies</h3>
+											<image class="embed-responsive-item" src="images/submission_screenshot_titanic.png" style="width:100%"></image>
+
+											<h3>My Contribution</h3>
+											<p>Submitting the default code I obtained an accuracy of 0.775. Then by going through <a href="https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8">Niklas Donges's blog</a> on medium for predicting the survival of titanic passengers I understood the essential step to cleaning data and applying various algorithms. First I checked the columns which contained NAN values and found out the age feature had many values missing. So to normalize the age and fill out missing values I combined the training and testing data to obtain the mean and then insert it where the values were missing. Plotting the age feature on the graph showed that it was well spread out over various age brackets. So I added age to our random forest decision and found the accuracy to be 0.779 which was a very minute improvement.</p>
+											<p>Gaining a small success in the previous method I thought of looking into more features and found out that Embarked can be used to provide a decision. Looking at the plot of embarked it was seen most of the passengers boarded from Southampton(S). I filled in two missing values in embarked by adding the most frequent port, Southhampton. Now modifying the random forest I added embarked to the feature list and obtained an accuracy of 0.78468. This is a little better than the previous one.</p>
+											<p>Since I was getting better accuracy by adding more features to the random forest I thought of looking into the Fare column. Here also I found out few missing values and filled them. Hereafter plotting a histogram from the Fare feature I found out that most of the fares were between 0-100 which was not well distributed. I added this feature to the random forest feature list and the accuracy came to be 0.77751 which is similar to the first submission.</p>
+											<p>After looking into all the submissions the feature list containing [“Pclass”, “Sex”, “SibSp”, “Parch”, “Age”, “Embarked”] gave the best accuracy as per my submissions. This was a very minute improvement but showed a lot of ways to improve further.</p>
+
+											<h3>Credits</h3>
+											<p><a href="https://towardsdatascience.com/predicting-the-survival-of-titanic-passengers-30870ccc7e8">Niklas Donges's blog</a></p>
+											<p><a href="https://www.kaggle.com/code/alexisbcook/titanic-tutorial/notebook">Titanic Tutorial by Alexis Cook</a></p>
+
+										</article>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="col-3 col-6-medium col-12-small">
+								<section class="widget contact last" id="contact">
+									<h3>Contact</h3>
+									<ul>
+										<li><a href="https://www.instagram.com/biraaj_rt/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="https://www.linkedin.com/in/biraaj/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+										<li><a href="https://github.com/biraaj" class="icon brands fa-github"><span class="label">Github</span></a></li>
+									</ul>
+									<p>Email: bxr1886@mavs.uta.edu<br/>
+									Address: UTA<br/>
+									Phone: +1 (682)372-6989</p>
+								</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; Biraaj. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+			</div>
+
+		<!-- Scripts -->
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</body>
+</html>
