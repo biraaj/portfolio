@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<!--
+	Verti by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Caltech101</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload right-sidebar">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
+
+						<!-- Logo -->
+						<div>
+							<h1 class="current"><a class="bg-info rounded" href="caltech101.html">Biraaj Rout</a></h1>
+							<span></span>
+						</div>
+					</header>
+				</div>
+
+			<!-- Main -->
+				<div id="main-wrapper">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-8 col-12-medium">
+								<div id="content">
+
+									<!-- Content -->
+										<article>
+
+											<h2>Caltech101 | Airplanes, Motorbikes & Schooners</h2>
+
+											<image class="embed-responsive-item" src="images/caltech101/dataset-cover.jpeg" style="width:100%"></image>
+
+											<p>This is a challenge in kaggle to classify images of Airplanes, Motorbikes & Schooners.</p>
+
+											<h3>Dataset</h3>
+											<p>The data folder consists of 1661 images from three classes Airplanes(800), Motorbikes(768) and Schooners(63).</p>
+
+											<h3>Data Exploration and Tranformation</h3>
+											<p>Going through the data it was evident that most of the images had variable shape and color. Also the schooner class had only 63 images which was quite less.</p>
+											<p>So as the images are of different sizes I applied transformation [1] and converted image into 244*244 for VGG16/VGG19 and also 34*34 for simple CNN.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/tranform_code.jpg" style="width:100%"></image>
+
+											<p>To view the tranformed image I used the make_grid [2] from pytorch library.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/view_image_transform.jpg" style="width:100%"></image>
+                                            <p>Here we can see images are reduced to the size given in the transform function.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/Image_after_transformation.png" style="width:100%"></image>
+
+
+											<h3>Data Augmentation</h3>
+											<p>As there are very less images in class of schooner I explored a bit on weighted random sampler[3] and added weight to the samples accordingly.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/weighted_random_sampler.jpg" style="width:100%"></image>
+
+                                            <h3>CNN Model Generation</h3>
+											<p>After looking into the paperspace blog by Nouman [4] and VGG paper [5] I designed two models VGG16 and VGG19(referring to VGG16 code I designed for VGG19).</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/vgg_16_model_code.jpg" style="width:100%"></image>
+                                            <image class="embed-responsive-item" src="images/caltech101/VGG_19_model_code.jpg" style="width:100%"></image>
+                                            <p>Then for my own contribution I played around simple CNN code by referring to Nooman's blog [6]. Here I created two models SimpleCNNFourLayer and SimpleCNNFourLayerv2. These are quite basic 4 layer CNN where I modified the intermediate layer filter size.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/simplecnn_model_code.jpg" style="width:100%"></image>
+                                            <image class="embed-responsive-item" src="images/caltech101/Simplecnnv2_model_code.jpg" style="width:100%"></image>
+
+
+											<h3>Training and Validation</h3>
+											<p>For training the data I referred Nooman's blog [4] and created a modified train function to cater to the given data.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/train_function_code.jpg" style="width:100%"></image>
+
+                                            <p>For adding hyperparameters I used cross entropy loss [7] and for optimizer SGD [8] was used.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/hyperparameter_code.jpg" style="width:100%"></image>
+
+                                            <p>Now I started training the model 1 which is SimpleCNNFourLayer. Here At first I kept the momentum in SGD as 0.9 which resulted in nan loss as the local minima and global minima was skipped. So for the second time I kept the momentum to 0.5. The results are shown below</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/model1_training.jpg" style="width:100%"></image>
+                                            <image class="embed-responsive-item" src="images/caltech101/simplecnnfourlayer_loss_plot.jpg" style="width:100%"></image>
+
+                                            <p>I used the same hyperparameters for model2 which is SimpleCNNFourLayerv2 and got the following results.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/model_2_training.jpg" style="width:100%"></image>
+                                            <image class="embed-responsive-item" src="images/caltech101/simplecnnfourlayerv2_loss_plot.jpg" style="width:100%"></image>
+
+                                            <p>With hyperparameters being constant I trained model3(vgg16) and model4(vgg19)</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/model3_training.jpg" style="width:100%"></image>
+                                            <image class="embed-responsive-item" src="images/caltech101/vgg16_loss_graph.jpg" style="width:100%"></image>
+
+                                            <image class="embed-responsive-item" src="images/caltech101/model4_training.jpg" style="width:100%"></image>
+                                            <image class="embed-responsive-item" src="images/caltech101/vgg19_loss_graph.jpg" style="width:100%"></image>
+
+                                            <h3>Training Performance</h3>
+                                            <p>looking at the graph below for training performance we can interpet that the performance of VGG16 and VGG19 is better than my own two simple models. Also looking at Validation and train loss above we can see VGG16 and VGG19 have a closer plot at the end.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/training_performances.jpg" style="width:100%"></image>
+
+
+                                            <h3>Testing</h3>
+                                            <p>For testing the function was referred from nooman's blog [4] which is shown below.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/test_function_code.jpg" style="width:100%"></image>
+                                            <p>After Running the test code multiple time on each model output we obatined the accuracy shown in the graphs below.</p>
+                                            <image class="embed-responsive-item" src="images/caltech101/test_performances.jpg" style="width:100%"></image>
+
+
+											<h3>My Major Contributions</h3>
+											<p>I created the model vgg19 by referring vgg16 code [4] and research papaer [5] which gave an test accuracy of 99%.</p>
+                                            <p>Referring the first SimpleCNNFourLayer code I created the SimpleCNNFourLayerv2 which gave an test accuracy of 97%.</p>
+                                            <p>I modified hyperparameters multiple time with epochs 5,10,20 and batch_size 4,10,12,50 and also momentum in sgd at 0.9,0.8 and 0.5. Trying out all the parameters I received the optimal solution for all model at momentum 0.5 and batch_size 50 and learning rate 0.005.</p>
+
+											<h3>Reference</h3>
+											<p>[1] <a href="https://pytorch.org/tutorials/beginner/basics/transforms_tutorial.html">https://pytorch.org/tutorials/beginner/basics/transforms_tutorial.html</a></p>
+											<p>[2] <a href="https://pytorch.org/vision/stable/auto_examples/plot_visualization_utils.html">https://pytorch.org/vision/stable/auto_examples/plot_visualization_utils.html</a></p>
+                                            <p>[3] <a href="https://pytorch.org/docs/stable/data.html#torch.utils.data.WeightedRandomSampler">https://pytorch.org/docs/stable/data.html#torch.utils.data.WeightedRandomSampler</a></p>
+                                            <p>[4] <a href="https://blog.paperspace.com/vgg-from-scratch-pytor">https://blog.paperspace.com/vgg-from-scratch-pytorch/</a></p>
+                                            <p>[5] <a href="https://arxiv.org/pdf/1409.1556.pdf">https://arxiv.org/pdf/1409.1556.pdf</a></p>
+                                            <p>[6] <a href="https://blog.paperspace.com/writing-cnns-from-scratch-in-pytorch/">https://blog.paperspace.com/writing-cnns-from-scratch-in-pytorch/</a></p>
+                                            <p>[7] <a href="https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html</a></p>
+                                            <p>[8] <a href="https://pytorch.org/docs/stable/generated/torch.optim.SGD.html">https://pytorch.org/docs/stable/generated/torch.optim.SGD.html</a></p>
+
+
+										</article>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<footer id="footer" class="container">
+						<div class="row">
+							<div class="col-3 col-6-medium col-12-small">
+								<section class="widget contact last" id="contact">
+									<h3>Contact</h3>
+									<ul>
+										<li><a href="https://www.instagram.com/biraaj_rt/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="https://www.linkedin.com/in/biraaj/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+										<li><a href="https://github.com/biraaj" class="icon brands fa-github"><span class="label">Github</span></a></li>
+									</ul>
+									<p>Email: bxr1886@mavs.uta.edu<br/>
+									Address: UTA<br/>
+									Phone: +1 (682)372-6989</p>
+								</section>
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+							</div>
+							<div class="col-3 col-6-medium col-12-small">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div id="copyright">
+									<ul class="menu">
+										<li>&copy; Biraaj. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</footer>
+				</div>
+
+			</div>
+
+		<!-- Scripts -->
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</body>
+</html>
